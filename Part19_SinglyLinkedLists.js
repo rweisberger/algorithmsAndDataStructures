@@ -73,6 +73,72 @@ class SinglyLinkedList{
         list.length--;
         return deleteNode;
     }
+    unshift(val){
+        let node = new Node(val);
+        if(this.head === null){
+            this.head = node;
+            this.tail = this.head;
+        } else {
+            let temp = this.head;
+            this.head = node; 
+            node.next = temp;
+        }
+        this.length++;
+        return this.head;
+    }
+    get(index){
+        if(index < 0 || index > this.length)return undefined
+        
+        let current = this.head;
+        let count = 0; 
+        // while(current){
+        //     if(count === index){
+        //         return current
+        //     }
+        //     current = current.next
+        // }
+        // This is better:
+        while(count !== index){
+            current = current.next;
+            count++;
+        }
+        return current;
+    }
+    set(index, val){
+        if(!val) return null;
+        let node = this.get(index);
+        if(node){
+            node.val = val;
+            return true;
+        } else {
+            return false
+        }
+    }
+    insert(index, val){
+        let node = new Node(val);
+        let count = 0;
+        let current = this.head;
+
+        if(index < 0 || index > this.length) {
+           return false; 
+        } else if(index === 0) {
+            this.unshift(val);
+            return true;
+        } else if(index === this.length) {
+            this.push(val);
+            return true;
+        } else {
+            while(current){
+                 if(count === index){
+                    let temp = current;
+                    current = node;
+                    node.next = temp;
+                }
+                current = current.next;
+                count++;
+            }  
+        }
+    }
 }
 var list = new SinglyLinkedList();
 list.push('Hello');
