@@ -51,4 +51,23 @@ class Graph {
 
         delete this.adjacencyList[name]; 
     }
+    recursiveDFS(vertex){
+        const result = [];
+        const visited = new Set();
+        const adjacencyList = this.adjacencyList;
+    
+        const DFS = (inputVertex) => {
+            if(!inputVertex) return null;
+    
+            visited.add(inputVertex);
+            result.push(inputVertex);
+            
+            adjacencyList[inputVertex].forEach(neighbor =>{
+                if(!visited.has(neighbor)) DFS(neighbor);
+            })
+        }
+    
+        DFS(vertex);
+        return result;
+    }
 } 
