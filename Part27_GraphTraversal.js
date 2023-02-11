@@ -9,19 +9,18 @@
  */
 
 
-
+// Colt is suggesting using an object to keep track of visited vertexes with a a value of true. I will use a set here, but
+// wonder if there are cases when that might be helpful
 const graphDFS = ({ adjacencyList }) => {
     const result = [];
     const visited = new Set();
-    // console.log(Object.keys(adjacencyList))
 
     const DFS = (inputVertex) => {
 
         visited.add(inputVertex);
         result.push(inputVertex);
-        console.log(inputVertex)
 
-        let neighbors = adjacencyList[inputVertex];
+        const neighbors = adjacencyList[inputVertex];
         for(let neighbor of neighbors){
             if(!visited.has(neighbor)) DFS(neighbor);
         }
@@ -31,14 +30,51 @@ const graphDFS = ({ adjacencyList }) => {
     return result;
 }
 
+const graphIterativeDFS = ({ adjacencyList }) => {
+    const q = [];
+    const visited = new Set();
+    // add parseInt() for int
+    q.push(Object.keys(adjacencyList)[0]);
+    let currentVertex;
+    const result = [];
 
-// const graphIterativeDFS = (adjacencyList) => {
-//     let q = ();
-//     q.push()
+    while(q.length){
+        currentVertex = q.pop();
+        if(!visited.has(currentVertex)){
+            result.push(currentVertex);
+            visited.add(currentVertex);
 
+            const neighbors = adjacencyList[currentVertex]
+            neighbors.forEach(neighbor => {
+                q.push(neighbor);
+            })
+        }
+    }
+    return result;
+}
 
-// }
+const graphBFS = ({ adjacencyList }) => {
+    const q = [];
+    const visited = new Set();
+    q.push(Object.keys(adjacencyList)[0]);
+    let currentVertex;
+    const result = [];
 
+    while(q.length){
+        currentVertex = q.shift();
+        result.add(currentVertex);
+        visited.add(currentVertex);
+
+        let neighbors = adjacencyList[currentVertex];
+        neighbors.forEach(neighbor => {
+            if(!visited.has(neighbor)){
+                q.push(neighbor);
+                visited.add(neighbor);
+            }
+        })
+    }
+    return result
+}
 
 
 let adjLst2 = {
@@ -68,3 +104,12 @@ g.addEdge("D","E")
 g.addEdge("D","F")
 g.addEdge("E","F")
 graphDFS(g)
+
+
+//          A
+//        /   \
+//       B     C
+//       |     |
+//       D --- E
+//        \   /
+//          F

@@ -70,4 +70,51 @@ class Graph {
         DFS(vertex);
         return result;
     }
+    iterativeDFS(vertex){
+        // this time we are using a stack, last in first out
+        const stack = [];
+        const visited = new Set();
+        const adjacencyList = this.adjacencyList;
+        stack.push(vertex);
+        let currentVertex;
+        const result = [];
+    
+        while(stack.length){
+            currentVertex = stack.pop();
+            if(!visited.has(currentVertex)){
+                result.push(currentVertex);
+                visited.add(currentVertex);
+    
+                const neighbors = adjacencyList[currentVertex];
+                neighbors.forEach(neighbor => {
+                    stack.push(neighbor);
+                })
+            }
+        }
+        return result;
+    }
+    graphBFS(vertex){
+        const q = [];
+        q.push(vertex);
+        const visited = new Set();
+        const result = [];
+        let currentVertex;
+
+        while(q.length){
+            currentVertex = q.shift();
+            result.push(currentVertex);
+            visited.add(currentVertex);
+
+            let neighbors = this.adjacencyList[currentVertex];
+            neighbors.forEach(neighbor => {
+                if(!visited.has(neighbor)){
+                    q.push(neighbor);
+                    visited.add(neighbor);
+                }
+            })
+        }
+        return result;
+    }
 } 
+
+ 
