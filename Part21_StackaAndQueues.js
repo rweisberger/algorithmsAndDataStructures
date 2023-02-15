@@ -29,9 +29,11 @@ class Stack {
         if(this.length === 0) return null;
 
         let removedNode = this.first;
+        if(this.first === this.last){
+            this.last = null;
+        }
         this.first = this.first.next;
         this.length--;
         return removedNode.value;
-    
     }
 }
