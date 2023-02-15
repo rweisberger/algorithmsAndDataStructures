@@ -46,21 +46,24 @@ class Queue{
         this.last = null;
         this.length = 0;
     }
+    dequeue(){
+        if(this.length === 0) return null;
+        let deletedNode = this.first;
+        this.first.next = this.first
+        this.length--;
+        return deletedNode;
+    }
     enqueue(value){
         const newNode = new Node(value)
 
         if(this.length === 0){
             this.first = newNode;
             this.last = newNode;
-        }
-        let current = this.head;
-        while(current){
-            if(current === this.tail){
-                this.tail.next = newNode;
-                newNode = this.tail;
-            }
-            current = current.next;
+        }  {
+            this.last.next = newNode; 
+            this.last = newNode
         }
         this.length++;
+        return this.length;
     }
 }
