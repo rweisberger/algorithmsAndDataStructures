@@ -129,6 +129,64 @@ class BinarySearchTrees {
         traverse(current);
         return result;
     }
+    BFS(){
+        let result=[];
+        let q = [];
+        let current;
+
+        q.push(this.root);
+
+        while(q.length){
+            current = q.shift();
+            result.push(current.value);
+            if(current.left) q.push(current.left);
+            if(current.right) q.push(current.right);
+        }
+        return result;
+    }
+    preOrderDFS = () => {
+        let result = [];
+    
+        const traverse = (inputNode) => {
+            if(!inputNode) return;
+    
+            result.push(inputNode.value);
+            traverse(inputNode.left);
+            traverse(inputNode.right);
+        }
+        // Colt check with the call- this might be more efficient- it doesn't add a call to the stack with a null value
+        // const traverse = (inputNode) => {    
+        //     result.push(inputNode.value);
+        //     if(inputNode.left)traverse(inputNode.left);
+        //     if(inputNode.right)traverse(inputNode.right);
+        // }
+    
+        traverse(this.root);
+        return result;
+    }
+    postOrderDFS = () => {
+        let result = [];
+    
+        const traverse = (inputNode) => {
+            if(inputNode.left) traverse(inputNode.left);
+            if(inputNode.right) traverse(inputNode.right);
+            result.push(inputNode.value);
+        }
+      
+        traverse(this.root);
+        return result;
+    }
+    nOrderDFS () {
+        let result = [];
+    
+        const traverse = (inputNode) => {
+            if(inputNode.left) traverse(inputNode.left);
+            result.push(inputNode.value);
+            if(inputNode.right) traverse(inputNode.right);
+        }        
+        traverse(this.root);
+        return result;
+    }
 }
 
 // big O = O(log n) for insertion and search
